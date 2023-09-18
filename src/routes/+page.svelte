@@ -23,7 +23,7 @@
 	}
 </script>
 
-<div class="overflow-hidden rounded-md bg-white shadow">
+<div class="overflow-hidden rounded-md bg-white shadow m-8">
 	<div class="border-b border-gray-200 bg-white mx-8 py-9 sm:px-6">
 		<div>
 			{#if errorMessage}
