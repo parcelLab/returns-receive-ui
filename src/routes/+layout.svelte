@@ -2,8 +2,9 @@
 	export const prerender = true;
 	export const trailingSlash = 'always';
 
-	import { onMount } from 'svelte';
 	import '../app.css';
+	import { onMount } from 'svelte';
+	import { base } from '$app/paths';
 
 	export let path = '/';
 	onMount(() => {
@@ -34,7 +35,7 @@
 					</div>
 					<div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
 						<a
-							href="/"
+							href="{base}/"
 							class="{path === '/' || /^\/tracking\/[a-zA-Z0-9]{24}/.test(path)
 								? activeClassesDesktop
 								: inactiveClassesDesktop} inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium"
@@ -60,7 +61,7 @@
 							{/if}
 						</a>
 						<a
-							href="/setup"
+							href="{base}/setup"
 							class="{path === '/setup'
 								? activeClassesDesktop
 								: inactiveClassesDesktop} inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium"
@@ -72,7 +73,7 @@
 
         <div class="sm:hidden flex items-center -ml-20">
           <a
-					href="/"
+					href="{base}/"
 					class="{path === '/'
 						? 'border-blue-500 border-b-2 text-blue-600'
 						: ''} block py-2 text-base font-medium"
@@ -84,7 +85,7 @@
 				<div class="-mr-2 flex items-center sm:hidden">
 
 					<a
-            href="/setup"
+            href="{base}/setup"
 						type="button"
 						class="relative inline-flex items-center justify-center rounded-md bg-white p-2  hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 {path === '/setup' ? 'text-blue-500' : 'text-gray-400'}"
 						aria-controls="mobile-menu"

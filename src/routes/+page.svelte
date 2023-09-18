@@ -3,10 +3,11 @@
 	import { getTrackingId } from '$lib/parcellab-api';
 	import { onMount } from 'svelte';
 	import { Html5Qrcode } from 'html5-qrcode';
+	import { base } from '$app/paths';
 
 	onMount(() => {
 		if (!/^\d{3,7}\$[a-zA-Z0-9]{48}$/.test(getCookie('connectionToken'))) {
-			window.location.href = '/setup';
+			window.location.href = `${base}/setup`;
 		} else {
 			html5QrcodeScanner = new Html5Qrcode('reader');
 		}
@@ -23,7 +24,7 @@
 	export async function submit() {
 		try {
 			const trackingId = await getTrackingId(scanInput);
-			window.location.href = `/tracking?id=${trackingId}`;
+			window.location.href = `${base}/tracking?id=${trackingId}`;
 		} catch (error) {
 			console.log(error);
 			errorMessage = error.toString();
