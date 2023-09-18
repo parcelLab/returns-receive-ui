@@ -217,7 +217,8 @@
 												<p
 													class="text-sm font-normal font-sans text-gray-700 mt-0 pt-1 text-center"
 												>
-													expected qty
+													<span class="hidden md:inline"> expected </span>
+													qty
 												</p>
 											</div>
 										</div>
@@ -226,10 +227,12 @@
 												on:click={() => {
 													article.checkInModal = true;
 												}}
-												class="h-20 rounded-md px-3 py-2 text-lg font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-800 w-full {article.accepted
+												class="h-20 rounded-md px-0 py-2 sm:text-lg text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-800 w-full {article.accepted
 													? 'bg-gray-400 hover:bg-gray-400'
-													: 'bg-red-400 hover:bg-red-600'}"
-												disabled={article.accepted}
+													: article.rejected
+													? 'bg-red-600 hover:bg-red-700'
+													: 'bg-red-500 hover:bg-red-600'}"
+												disabled={article.accepted || article.rejected}
 											>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
@@ -245,7 +248,15 @@
 														d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
 													/>
 												</svg>
-												Not okay
+												{article.rejected
+													? article.rejectionReason === 'other'
+														? 'Rejected'
+														: article.rejectionReason === 'missing_quantity'
+														? 'Missing'
+														: article.rejectionReason === 'quality_issue'
+														? 'Defective'
+														: 'Rejected'
+													: 'Not okay'}
 											</button>
 										</div>
 										<div>
@@ -253,9 +264,12 @@
 												on:click={() => {
 													article.accepted = true;
 												}}
-												class="h-20 rounded-md bg-emerald-400 px-3 py-2 text-lg font-semibold text-white shadow-sm hover:bg-emerald-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700 w-full {article.accepted &&
-													'bg-emerald-600'}"
-												disabled={article.accepted}
+												class="h-20 rounded-md px-0 py-2 sm:text-lg text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700 w-full {article.accepted
+													? 'bg-emerald-600'
+													: article.rejected
+													? 'bg-gray-400 hover:bg-gray-400'
+													: 'bg-emerald-400 hover:bg-emerald-600'}"
+												disabled={article.accepted || article.rejected}
 											>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
@@ -301,7 +315,7 @@
 						class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
 					>
 						<div
-							class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-8/12"
+							class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:w-8/12 w-11/12"
 						>
 							<div class="p-6">
 								<div class="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
@@ -331,7 +345,7 @@
 								</div>
 
 								<div class="grid grid-cols-4 gap-4">
-									<div>
+									<div class="sm:col-span-1 col-span-4">
 										<img
 											class="h-auto w-full rounded border border-gray-300"
 											src={article.articleImageUrl}
@@ -342,7 +356,7 @@
 										<p class="text-2xl mt-4 font-semibold leading-6 text-gray-900">
 											{article.articleName}
 										</p>
-										<p class="mt-2 truncate text-md leading-5 text-gray-500">
+										<p class="mt-2 text-md leading-5 text-gray-500">
 											Article no.: {article.articleNo}
 											&bull;
 											{tracking?.customFields?.shopifyReturnData?.totalRefundAmountCurrency}
@@ -364,10 +378,10 @@
 
 								{#if article.quantity > 1}
 									<div class="grid grid-cols-3 gap-4 rounded border border-gray-300 mt-4 p-4">
-										<div>
+										<div class="sm:col-span-1 col-span-3">
 											<p class="text-md font-semibold text-gray-900">Accepted quantity</p>
 										</div>
-										<div>
+										<div class="sm:col-span-1 col-span-3">
 											<div class="flex rounded-md shadow-sm">
 												<button
 													type="button"
@@ -433,8 +447,8 @@
 												</button>
 											</div>
 										</div>
-										<div>
-											<p class="text-xs text-gray-500 pt-6">
+										<div class="sm:col-span-1 col-span-3">
+											<p class="text-xs text-gray-500 sm:pt-6">
 												Quantity of {article.quantity - article.acceptedQuantity} will
 												<b>not</b> be accepted and refunded.
 											</p>
@@ -448,7 +462,7 @@
 									</div>
 									<div>
 										<button
-											class="rounded-md px-3 py-2 text-lg font-semibold hover:text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700 w-full {article.rejectionReason ===
+											class="rounded-md px-0 py-2 sm:text-lg text-sm font-semibold hover:text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700 w-full {article.rejectionReason ===
 											'missing_quantity'
 												? 'bg-blue-500 text-white'
 												: 'bg-gray-300 hover:bg-gray-500 text-gray-600'}"
@@ -461,7 +475,7 @@
 									</div>
 									<div>
 										<button
-											class="rounded-md px-3 py-2 text-lg font-semibold hover:text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700 w-full {article.rejectionReason ===
+											class="rounded-md px-0 py-2 sm:text-lg text-sm font-semibold hover:text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700 w-full {article.rejectionReason ===
 											'quality_issue'
 												? 'bg-blue-500 text-white'
 												: 'bg-gray-300 hover:bg-gray-500 text-gray-600'}"
@@ -474,7 +488,7 @@
 									</div>
 									<div>
 										<button
-											class="rounded-md px-3 py-2 text-lg font-semibold hover:text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700 w-full {article.rejectionReason ===
+											class="rounded-md px-0 py-2 sm:text-lg text-sm font-semibold hover:text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700 w-full {article.rejectionReason ===
 											'other'
 												? 'bg-blue-500 text-white'
 												: 'bg-gray-300 hover:bg-gray-500 text-gray-600'}"
@@ -491,12 +505,15 @@
 							<div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
 								<button
 									type="button"
-									class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 font-semibold text-white shadow-sm hover:bg-blue-400 sm:ml-3 sm:w-auto text-lg {!article.rejectionReason &&
+									class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 font-semibold text-white shadow-sm hover:bg-blue-400 sm:ml-3 sm:w-auto sm:text-lg text-sm {!article.rejectionReason &&
 										'opacity-50 cursor-not-allowed'}"
 									disabled={!article.rejectionReason}
-									on:click={() => {}}
+									on:click={() => {
+										article.checkInModal = false;
+										article.rejected = true;
+									}}
 								>
-									Reject 
+									Reject
 									{#if article.quantity > 1}
 										{article.quantity - article.acceptedQuantity} of {article.quantity}
 									{/if}
@@ -513,7 +530,7 @@
 								</button>
 								<button
 									type="button"
-									class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto text-lg"
+									class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto sm:text-lg text-sm"
 									on:click={() => {
 										article.checkInModal = false;
 									}}>Cancel</button
