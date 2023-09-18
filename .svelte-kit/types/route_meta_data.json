@@ -1,0 +1,7 @@
+{
+	"/": [],
+	"/setup": [],
+	"/tracking/[trackingId]": [
+		"src/routes/tracking/[trackingId]/+page.js"
+	]
+}
