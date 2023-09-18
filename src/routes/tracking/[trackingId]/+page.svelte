@@ -18,7 +18,7 @@
 {#await getTrackingDetailsAndSetData()}
 	<h1>Loading</h1>
 {:then}
-	<main>
+	<main class="pt-8 pb-5">
 		<header class="relative">
 			<div class="mx-auto max-w-7xl px-4 pb-4 sm:px-6 lg:px-8">
 				<div
@@ -304,6 +304,29 @@
 			</div>
 		</div>
 	</main>
+
+	<footer class="w-full text-center sticky bottom-0 p-4 bg-white border-gray-200 border-t-2">
+		<div class="flex gap-8 items-center justify-center">
+			<div>
+				<p class="text-sm text-gray-700">
+					{tracking?.articles?.filter((article) => article?.accepted).length} of{' '}
+					{tracking?.articles?.length} lines checked
+				</p>
+			</div>
+			<div>
+				<button
+					class="rounded-md px-4 py-2 sm:text-lg text-sm font-semibold text-white shadow-sm {tracking?.articles?.some(
+						(article) => !article?.accepted && !article?.rejected
+					)
+						? 'bg-blue-100'
+						: 'bg-blue-500'}"
+					disabled={tracking?.articles?.some((article) => !article?.accepted && !article?.rejected)}
+				>
+					Close return
+				</button>
+			</div>
+		</div>
+	</footer>
 
 	{#if tracking?.articles?.some((article) => article?.checkInModal)}
 		<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
