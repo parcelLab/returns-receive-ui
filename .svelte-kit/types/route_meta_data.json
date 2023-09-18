@@ -1,7 +1,11 @@
 {
-	"/": [],
-	"/setup": [],
-	"/tracking/[trackingId]": [
-		"src/routes/tracking/[trackingId]/+page.js"
+	"/": [
+		"src/routes/+page.js"
+	],
+	"/setup": [
+		"src/routes/setup/+page.js"
+	],
+	"/tracking": [
+		"src/routes/tracking/+page.js"
 	]
 }

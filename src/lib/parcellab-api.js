@@ -40,7 +40,8 @@ export async function getTrackingId(input) {
 }
 
 export async function getTrackingDetails() {
-  const trackingId = window.location.pathname.split('/')[2];
+  const params = new URLSearchParams(window.location.search);
+  const trackingId = params.get("id");
 
   const myHeaders = new Headers();
   myHeaders.append('user', getCookie('connectionToken').split('$')[0]);

@@ -23,7 +23,7 @@
 	export async function submit() {
 		try {
 			const trackingId = await getTrackingId(scanInput);
-			window.location.href = `/tracking/${trackingId}`;
+			window.location.href = `/tracking?id=${trackingId}`;
 		} catch (error) {
 			console.log(error);
 			errorMessage = error.toString();

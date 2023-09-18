@@ -130,3 +130,5 @@ dist
 .pnp.*
 .svelte-kit/generated
 .DS_Store
+build
+.svelte-kit/output
