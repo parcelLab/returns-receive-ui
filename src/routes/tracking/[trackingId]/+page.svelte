@@ -1,6 +1,6 @@
 <script>
-	// export let data; // data.slug
-	import { getTrackingDetails } from '$lib/parcellab-api.js';
+	import { goto } from '$app/navigation';
+	import { getTrackingDetails, submitTrackingCheck } from '$lib/parcellab-api.js';
 
 	/**
 	 * @type {{ orderNo: any; consignmentNo: any; courier: { prettyname: any; }; tracking_number: any; customFields: { shopifyReturnData: { totalRefundAmountCurrency: any; totalRefundAmount: number; refundedTaxCurrency: any; refundedTax: number; }; }; recipient: any; street: any; city: any; zip_code: any; region: string; country: { name: any; }; email: any; created: string | number | Date; articles: any; } | null}
@@ -12,6 +12,11 @@
 		tracking?.articles?.forEach((article) => {
 			article.acceptedQuantity = 0;
 		});
+	}
+
+	export async function submitTracking() {
+		await submitTrackingCheck(tracking);
+		goto('/')
 	}
 </script>
 
@@ -263,6 +268,7 @@
 											<button
 												on:click={() => {
 													article.accepted = true;
+													article.acceptedQuantity = article.quantity;
 												}}
 												class="h-20 rounded-md px-0 py-2 sm:text-lg text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700 w-full {article.accepted
 													? 'bg-emerald-600'
@@ -309,7 +315,7 @@
 		<div class="flex gap-8 items-center justify-center">
 			<div>
 				<p class="text-sm text-gray-700">
-					{tracking?.articles?.filter((article) => article?.accepted).length} of{' '}
+					{tracking?.articles?.filter((article) => article?.accepted || article?.rejected).length} of
 					{tracking?.articles?.length} lines checked
 				</p>
 			</div>
@@ -321,6 +327,7 @@
 						? 'bg-blue-100'
 						: 'bg-blue-500'}"
 					disabled={tracking?.articles?.some((article) => !article?.accepted && !article?.rejected)}
+					on:click={submitTracking}
 				>
 					Close return
 				</button>

@@ -19,7 +19,7 @@ export async function getTrackingId(input) {
       .then(response => {
         if (response?.results?.length > 0) {
           const returnsForQuery = response.results.filter(result => result.oth.retpo)
-          
+
           if (returnsForQuery.length === 1) {
             resolve(returnsForQuery[0].id)
           } else if (returnsForQuery.length === 0) {
@@ -64,5 +64,31 @@ export async function getTrackingDetails() {
         console.error(error);
         reject(error);
       })
+  })
+}
+
+export async function submitTrackingCheck(tracking) {
+  const myHeaders = new Headers();
+  myHeaders.append('user', getCookie('connectionToken').split('$')[0]);
+  myHeaders.append('token', getCookie('connectionToken').split('$')[1]);
+  myHeaders.append("Content-Type", "application/json");
+
+  const requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify({
+      scanAs: getCookie('scanAs'),
+      tracking
+    }),
+    redirect: 'follow'
+  };
+
+  return new Promise((resolve, reject) => {
+    fetch("https://api.parcellab.com/debug", requestOptions)
+      .then(result => resolve(result))
+      .catch(error => {
+        console.error(error);
+        reject(error);
+      });
   })
 }
