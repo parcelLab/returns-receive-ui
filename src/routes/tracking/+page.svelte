@@ -21,7 +21,182 @@
 </script>
 
 {#await getTrackingDetailsAndSetData()}
-	<h1>Loading</h1>
+	<main class="pt-8 pb-5">
+		<header class="relative">
+			<div class="mx-auto max-w-7xl px-4 pb-4 sm:px-6 lg:px-8">
+				<div
+					class="mx-auto flex max-w-2xl items-center justify-between gap-x-8 lg:mx-0 lg:max-w-none"
+				>
+					<div class="flex items-center gap-x-6">
+						<h1>
+							<div class="text-sm leading-6 text-gray-500">
+								<span class="h-2 w-12 inline-block bg-slate-300 rounded animate-pulse"></span>
+								&bull;
+								<span class="h-2 w-12 inline-block bg-slate-300 rounded animate-pulse"></span>
+							</div>
+							<span class="h-2 w-36 inline-block bg-slate-500 rounded animate-pulse"></span>
+						</h1>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+			<div
+				class="mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3"
+			>
+				<!-- Summary (right side) -->
+				<div class="lg:col-start-3 lg:row-end-1">
+					<div class="rounded-lg bg-gray-50 shadow-sm ring-1 ring-gray-900/5">
+						<dl class="flex flex-wrap py-6">
+							<div class="flex-auto pl-6">
+								<dt class="text-sm font-semibold leading-6 text-gray-900">
+									<span class="h-2 w-12 inline-block bg-slate-500 rounded animate-pulse"></span>
+								</dt>
+								<dd class="mt-1 text-base font-semibold leading-6 text-gray-900">
+									<span class="h-2 w-20 inline-block bg-slate-300 rounded animate-pulse"></span>
+								</dd>
+							</div>
+							<div class="mt-6 flex w-full flex-none gap-x-4 border-t border-gray-900/5 px-6 pt-6">
+								<dt class="flex-none">
+									<svg
+										class="h-6 w-5 text-gray-400"
+										viewBox="0 0 20 20"
+										fill="currentColor"
+										aria-hidden="true"
+									>
+										<path
+											fill-rule="evenodd"
+											d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-5.5-2.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0zM10 12a5.99 5.99 0 00-4.793 2.39A6.483 6.483 0 0010 16.5a6.483 6.483 0 004.793-2.11A5.99 5.99 0 0010 12z"
+											clip-rule="evenodd"
+										/>
+									</svg>
+								</dt>
+								<dd class="text-sm leading-6 text-gray-900">
+									<span class="h-2 w-20 inline-block bg-slate-300 rounded animate-pulse"></span>
+									<br />
+									<span class="h-2 w-24 inline-block bg-slate-300 rounded animate-pulse"></span>
+									<br />
+									<span class="h-2 w-12 inline-block bg-slate-300 rounded animate-pulse"></span>
+									<br />
+									<span class="h-2 w-20 inline-block bg-slate-300 rounded animate-pulse"></span>
+								</dd>
+							</div>
+							<div class="mt-4 flex w-full flex-none gap-x-4 px-6">
+								<dt class="flex-none">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke-width="1.5"
+										stroke="currentColor"
+										class="h-6 w-5 text-gray-400"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											d="M21.75 9v.906a2.25 2.25 0 01-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 001.183 1.981l6.478 3.488m8.839 2.51l-4.66-2.51m0 0l-1.023-.55a2.25 2.25 0 00-2.134 0l-1.022.55m0 0l-4.661 2.51m16.5 1.615a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V8.844a2.25 2.25 0 011.183-1.98l7.5-4.04a2.25 2.25 0 012.134 0l7.5 4.04a2.25 2.25 0 011.183 1.98V19.5z"
+										/>
+									</svg>
+								</dt>
+								<dd class="text-sm leading-6 text-gray-500">
+									<span class="h-2 w-28 inline-block bg-slate-300 rounded animate-pulse"></span>	
+								</dd>
+							</div>
+							<div class="mt-4 flex w-full flex-none gap-x-4 px-6">
+								<dt class="flex-none">
+									<span class="sr-only">Returned on</span>
+									<svg
+										class="h-6 w-5 text-gray-400"
+										viewBox="0 0 20 20"
+										fill="currentColor"
+										aria-hidden="true"
+									>
+										<path
+											d="M5.25 12a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H6a.75.75 0 01-.75-.75V12zM6 13.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V14a.75.75 0 00-.75-.75H6zM7.25 12a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H8a.75.75 0 01-.75-.75V12zM8 13.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V14a.75.75 0 00-.75-.75H8zM9.25 10a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H10a.75.75 0 01-.75-.75V10zM10 11.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V12a.75.75 0 00-.75-.75H10zM9.25 14a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H10a.75.75 0 01-.75-.75V14zM12 9.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V10a.75.75 0 00-.75-.75H12zM11.25 12a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H12a.75.75 0 01-.75-.75V12zM12 13.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V14a.75.75 0 00-.75-.75H12zM13.25 10a.75.75 0 01.75-.75h.01a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75H14a.75.75 0 01-.75-.75V10zM14 11.25a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75h.01a.75.75 0 00.75-.75V12a.75.75 0 00-.75-.75H14z"
+										/>
+										<path
+											fill-rule="evenodd"
+											d="M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75z"
+											clip-rule="evenodd"
+										/>
+									</svg>
+								</dt>
+								<dd class="text-sm leading-6 text-gray-500">
+									<span class="h-2 w-20 inline-block bg-slate-300 rounded animate-pulse"></span>
+								</dd>
+							</div>
+						</dl>
+					</div>
+				</div>
+
+				<!-- Articles (left side) -->
+				<div
+					class="-mx-4 px-6 py-6 shadow-sm ring-1 ring-gray-900/5 sm:mx-0 sm:rounded-lg lg:col-span-2 lg:row-span-2 lg:row-end-2 bg-white"
+				>
+					<h2 class="text-sm font-semibold leading-6 text-gray-900">
+						<span class="h-2 w-24 inline-block bg-slate-500 rounded animate-pulse"></span>
+					</h2>
+
+					<ul role="list" class="divide-y divide-gray-100">
+
+							<li class="grid grid-cols-4 gap-4 pt-8 pb-8">
+								<div>
+									<div
+										class="w-full h-28 rounded border border-gray-200 bg-gray-50 animate-pulse"
+									/>
+								</div>
+								<div class="col-span-3">
+									<div class="grid grid-cols-3 gap-4">
+										<div class="col-span-3">
+											<p class="text-lg font-semibold leading-6 text-gray-900">
+												<span class="h-2 w-12 inline-block bg-slate-500 rounded animate-pulse"></span>
+											</p>
+											<p class="mt-1 truncate text-sm leading-5 text-gray-500">
+												<span class="h-2 w-36 inline-block bg-slate-300 rounded animate-pulse"></span>
+											</p>
+											<p class="mt-1 truncate text-sm leading-5 text-gray-500">
+												<span class="h-2 w-32 inline-block bg-slate-300 rounded animate-pulse"></span>
+											</p>
+											<p class="mt-1 truncate text-sm leading-5 text-gray-500">
+												<span class="h-2 w-28 inline-block bg-slate-300 rounded animate-pulse"></span>
+											</p>
+										</div>
+									</div>
+								</div>
+							</li>
+
+							<li class="grid grid-cols-4 gap-4 pt-8 pb-8">
+								<div>
+									<div
+										class="w-full h-28 rounded border border-gray-200 bg-gray-50 animate-pulse"
+									/>
+								</div>
+								<div class="col-span-3">
+									<div class="grid grid-cols-3 gap-4">
+										<div class="col-span-3">
+											<p class="text-lg font-semibold leading-6 text-gray-900">
+												<span class="h-2 w-12 inline-block bg-slate-500 rounded animate-pulse"></span>
+											</p>
+											<p class="mt-1 truncate text-sm leading-5 text-gray-500">
+												<span class="h-2 w-36 inline-block bg-slate-300 rounded animate-pulse"></span>
+											</p>
+											<p class="mt-1 truncate text-sm leading-5 text-gray-500">
+												<span class="h-2 w-32 inline-block bg-slate-300 rounded animate-pulse"></span>
+											</p>
+											<p class="mt-1 truncate text-sm leading-5 text-gray-500">
+												<span class="h-2 w-28 inline-block bg-slate-300 rounded animate-pulse"></span>
+											</p>
+										</div>
+									</div>
+								</div>
+							</li>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+	</main>
 {:then}
 	<main class="pt-8 pb-5">
 		<header class="relative">
