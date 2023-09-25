@@ -1,6 +1,6 @@
 import { browser } from "$app/environment";
 
-export function createCookie(name, value, days) {
+export function createCookie(name, value, days = 720) {
   var expires;
   if (days) {
     var date = new Date();
