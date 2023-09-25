@@ -4,7 +4,7 @@ A simple UI to accept or reject a digital return
 
 [See a demo video on desktop here (with commentary)](https://s.tape.sh/hGrVoVzk)
 
-[See a demo video on mobile here](https://parcellab-my.sharepoint.com/:v:/p/julian/EQP6SUFvhSBDht7jyX8pyJsBivN1kWJBPODPbXCGzCNzcA?e=PKCL1y&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZyIsInJlZmVycmFsQXBwUGxhdGZvcm0iOiJXZWIiLCJyZWZlcnJhbE1vZGUiOiJ2aWV3In19)
+[See a demo video on mobile here](https://parcellab-my.sharepoint.com/:v:/p/julian/EQLTsvUV4ntCl-7O7XXcs-UBe0Xr65CIyKogrFTZB-ZSsg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZyIsInJlZmVycmFsQXBwUGxhdGZvcm0iOiJXZWIiLCJyZWZlcnJhbE1vZGUiOiJ2aWV3In19&e=dzZFYh)
 
 ## Developing
 
@@ -41,6 +41,17 @@ Close return after all lines are checked
 
 <img width="640" alt="image" src="https://github.com/parcelLab/returns-receive-ui/assets/625618/b3cf9802-7ad0-4dad-8513-b86d4feb5be5">
 
+> On Mobile (using QR codes with device camera)
+
+<img width="200" alt="1_scan-setup-code" src="https://github.com/parcelLab/returns-receive-ui/assets/625618/03b8ea39-40b5-4e4f-be88-0908a9a97c41">
+<img width="200" alt="2_start-screen" src="https://github.com/parcelLab/returns-receive-ui/assets/625618/c6dbd15f-61f1-4004-aed0-ecb26de2090f">
+<img width="200" alt="3_allow-camera-access" src="https://github.com/parcelLab/returns-receive-ui/assets/625618/20021642-b851-4ffd-a827-452665f4611e">
+<img width="200" alt="4_item-select-screen" src="https://github.com/parcelLab/returns-receive-ui/assets/625618/b5b274f1-20fd-40c4-ba4e-7510a9d8de77">
+<img width="200" alt="5_approve-line-item" src="https://github.com/parcelLab/returns-receive-ui/assets/625618/66be8223-b681-4920-a26b-69cdb1eb8c3f">
+<img width="200" alt="6_reject-detail-screen" src="https://github.com/parcelLab/returns-receive-ui/assets/625618/6d032865-c47e-4797-b03e-95a6649b9952">
+<img width="200" alt="7_reject-detail-screen-selected" src="https://github.com/parcelLab/returns-receive-ui/assets/625618/b40debd9-513f-43a8-826b-d3f9e165d630">
+<img width="200" alt="8_reject-detail-screen-multi-quantity" src="https://github.com/parcelLab/returns-receive-ui/assets/625618/34dc52de-33b0-4df1-8439-770645c17e9c">
+<img width="200" alt="9_close-return" src="https://github.com/parcelLab/returns-receive-ui/assets/625618/ca1f594b-bc5d-41ac-abce-b42840cf42dd">
 
 ---
 
