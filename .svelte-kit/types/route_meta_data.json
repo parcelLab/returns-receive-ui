@@ -2,6 +2,9 @@
 	"/": [
 		"src/routes/+page.js"
 	],
+	"/auto-setup": [
+		"src/routes/auto-setup/+page.js"
+	],
 	"/setup": [
 		"src/routes/setup/+page.js"
 	],
