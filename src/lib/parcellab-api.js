@@ -12,7 +12,7 @@ export async function getTrackingId(input) {
 
   return new Promise((resolve, reject) => {
     fetch(
-      `https://api.parcellab.com/v2/search?s=${input}&return=true`,
+      `https://api.parcellab.com/v2/search?s=${input}&return=true&from=2023-01-01`,
       requestOptions
     )
       .then(response => response.json())
