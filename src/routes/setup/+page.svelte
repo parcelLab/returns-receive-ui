@@ -45,6 +45,9 @@
 			<div>
 				<label for="scan-as" class="block text-sm font-medium leading-6 text-gray-900">
 					Scan as
+					<span class="text-gray-400 font-light">
+						(will be shown as scan location for returns tracking)
+					</span>
 				</label>
 				<div class="mt-2">
 					<input
