@@ -27,7 +27,8 @@
 			window.location.href = `${base}/tracking?id=${trackingId}`;
 		} catch (error) {
 			console.log(error);
-			errorMessage = error.toString();
+			errorMessage = `${error.toString()} for code: ${scanInput}`;
+			scanInput = '';
 		}
 	}
 
