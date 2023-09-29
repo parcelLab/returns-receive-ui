@@ -23,7 +23,8 @@
 
 	export async function submit() {
 		try {
-			const trackingId = await getTrackingId(scanInput);
+			const cleanedScanInput = scanInput.replace(/^42056901/g, '');
+			const trackingId = await getTrackingId(cleanedScanInput);
 			window.location.href = `${base}/tracking?id=${trackingId}`;
 		} catch (error) {
 			console.log(error);
