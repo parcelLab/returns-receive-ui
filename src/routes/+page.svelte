@@ -21,12 +21,27 @@
 	 */
 	let html5QrcodeScanner = null;
 
-	export async function submit() {
+	/**
+	 * @param {{ target: { value: any; }; }} event
+	 */
+	function onScanInputChange(event) {
+		const { value } = event.target;
+		setTimeout(() => {
+			if (value === scanInput) {
+				console.log(`Submitt ${scanInput} silently`)
+				submit(Boolean('be silent'))
+			}
+		}, 1_000);
+	}
+
+	export async function submit(beSilent = false) {
 		try {
 			const cleanedScanInput = scanInput.replace(/^42056901/g, '');
 			const trackingId = await getTrackingId(cleanedScanInput);
 			window.location.href = `${base}/tracking?id=${trackingId}`;
 		} catch (error) {
+			if (beSilent) return;
+
 			console.log(error);
 			errorMessage = `${error.toString()} for code: ${scanInput}`;
 			scanInput = '';
@@ -61,7 +76,7 @@
 			<p class="mb-4 text-sm text-red-600" id="scan-error">{errorMessage}</p>
 		{/if}
 
-		<form on:submit|preventDefault={submit}>
+		<form on:submit|preventDefault={() => submit()}>
 			<div class="flex rounded-md shadow-sm">
 				<div class="relative flex flex-grow items-stretch focus-within:z-10">
 					<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -85,9 +100,11 @@
 							/>
 						</svg>
 					</div>
+					<!-- svelte-ignore a11y-autofocus -->
 					<input
 						autofocus
 						bind:value={scanInput}
+						on:input={onScanInputChange}
 						type="text"
 						name="barcode"
 						id="barcode"
@@ -96,7 +113,7 @@
 					/>
 				</div>
 				<button
-					on:click={submit}
+					on:click={() => submit()}
 					type="button"
 					class="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-full px-8 py-2 text-2xl font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 bg-gray-100 hover:bg-gray-200"
 				>
