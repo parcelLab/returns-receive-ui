@@ -365,7 +365,11 @@
 								<div>
 									<img
 										class="h-auto w-full rounded border border-gray-300"
-										src={article.articleImageUrl}
+										src={
+											article.returnImages?.length > 0
+												? article.returnImages[0].url
+												: article.articleImageUrl
+										}
 										alt={article.articleName}
 									/>
 								</div>
@@ -486,7 +490,7 @@
 		</div>
 	</main>
 
-	<footer class="w-full text-center sticky bottom-0 p-4 bg-white border-gray-200 border-t-2">
+	<footer class="w-full text-center fixed bottom-0 p-4 bg-white border-gray-200 border-t-2">
 		<div class="flex gap-8 items-center justify-center">
 			<div>
 				<p class="text-sm text-gray-700">
