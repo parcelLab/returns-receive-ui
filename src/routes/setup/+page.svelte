@@ -70,7 +70,7 @@
 				<div class="mt-2">
 					<input
 						bind:value={connectionTokenInput}
-						type="text"
+						type="password"
 						name="connection-token"
 						id="connection-token"
 						class="block w-full rounded-md border-0 py-1.5 {connectionTokenInputFaulty

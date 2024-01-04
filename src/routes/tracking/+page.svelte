@@ -9,7 +9,7 @@
 
 	export async function getTrackingDetailsAndSetData() {
 		tracking = await getTrackingDetails();
-		tracking?.articles?.forEach((article) => {
+		tracking?.articles?.forEach((/** @type {{ acceptedQuantity: number; }} */ article) => {
 			article.acceptedQuantity = 0;
 		});
 	}
@@ -265,8 +265,7 @@
 								<dd class="mt-1 text-base font-semibold leading-6 text-gray-900">
 									{tracking?.customFields?.shopifyReturnData?.totalRefundAmountCurrency}
 									{tracking?.customFields?.shopifyReturnData?.totalRefundAmount.toFixed(2)}
-									<span class="mt-1 text-sm font-normal">
-										+
+									<span class="mt-1 ml-1 text-sm font-normal"> 
 										{tracking?.customFields?.shopifyReturnData?.refundedTaxCurrency}
 										{tracking?.customFields?.shopifyReturnData?.refundedTax.toFixed(2)} tax
 									</span>
