@@ -1,6 +1,10 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { getTrackingDetails, submitTrackingCheck } from '$lib/parcellab-api.js';
+	import { getTrackingDetails, submitTrackingCheck } from '$lib/parcellab-api';
+	import { getCookie } from '$lib/cookie';
+	import { afterUpdate } from 'svelte';
+
+	export let autoApproveAmount = parseInt(getCookie('autoApproveAmount') || '0');
 
 	/**
 	 * @type {{ orderNo: any; consignmentNo: any; courier: { prettyname: any; }; tracking_number: any; customFields: { shopifyReturnData: { totalRefundAmountCurrency: any; totalRefundAmount: number; refundedTaxCurrency: any; refundedTax: number; }; }; recipient: any; street: any; city: any; zip_code: any; region: string; country: { name: any; }; email: any; created: string | number | Date; articles: any; } | null}
@@ -18,6 +22,16 @@
 		await submitTrackingCheck(tracking);
 		goto('/')
 	}
+
+	afterUpdate(async () => {
+		if (tracking && autoApproveAmount > 0) {
+			tracking.articles.forEach((/** @type {{ accepted: boolean; acceptedQuantity: any; quantity: any; }} */ article) => {
+				article.accepted = true;
+				article.acceptedQuantity = article.quantity;
+			})
+			await submitTrackingCheck(tracking);
+		}
+	})
 </script>
 
 {#await getTrackingDetailsAndSetData()}
@@ -708,6 +722,31 @@
 										</button>
 									</div>
 								</div>
+
+								<div class="grid grid-cols-3 gap-4 rounded border border-gray-300 mt-4 p-4">
+									<div class="col-span-3">
+										<p class="text-md font-semibold text-gray-900">
+											Details for rejection reason
+											<span class="font-normal text-gray-500">
+												(optional)
+											</span>
+										</p>
+									</div>
+									<div>
+										<input
+											type="text"
+											name="rejectionDetails"
+											id="rejectionDetails"
+											class="block w-full rounded-md border-gray-300 shadow-sm sm:text-lg text-sm text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+											placeholder="..."
+											on:blur={(e) => {
+												article.rejectionDetails = e?.target?.value;
+												console.log(tracking)
+											}}
+										/>
+									</div>
+								</div>
+
 							</div>
 
 							<div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
