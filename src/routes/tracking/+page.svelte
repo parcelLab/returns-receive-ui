@@ -1,6 +1,10 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { getTrackingDetails, submitTrackingCheck } from '$lib/parcellab-api.js';
+	import { getTrackingDetails, submitTrackingCheck } from '$lib/parcellab-api';
+	import { getCookie } from '$lib/cookie';
+	import { afterUpdate } from 'svelte';
+
+	export let autoApproveAmount = parseInt(getCookie('autoApproveAmount') || '0');
 
 	/**
 	 * @type {{ orderNo: any; consignmentNo: any; courier: { prettyname: any; }; tracking_number: any; customFields: { shopifyReturnData: { totalRefundAmountCurrency: any; totalRefundAmount: number; refundedTaxCurrency: any; refundedTax: number; }; }; recipient: any; street: any; city: any; zip_code: any; region: string; country: { name: any; }; email: any; created: string | number | Date; articles: any; } | null}
@@ -18,6 +22,16 @@
 		await submitTrackingCheck(tracking);
 		goto('/')
 	}
+
+	afterUpdate(async () => {
+		if (tracking && autoApproveAmount > 0) {
+			tracking.articles.forEach((/** @type {{ accepted: boolean; acceptedQuantity: any; quantity: any; }} */ article) => {
+				article.accepted = true;
+				article.acceptedQuantity = article.quantity;
+			})
+			await submitTrackingCheck(tracking);
+		}
+	})
 </script>
 
 {#await getTrackingDetailsAndSetData()}

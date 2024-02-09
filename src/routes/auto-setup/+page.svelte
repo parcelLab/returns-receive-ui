@@ -5,6 +5,7 @@
 
 	export let scanAsInput = '';
 	export let connectionTokenInput = '';
+	export let autoApproveAmountInput = '';
 	export let secondsUntilRedirect = 5;
 
 	onMount(() => {
@@ -12,9 +13,19 @@
 
 		scanAsInput = params.get('scanAs') || '';
 		connectionTokenInput = params.get('connectionToken') || '';
+		autoApproveAmountInput = params.get('autoApproveAmount') || '';
 
-		createCookie('scanAs', scanAsInput);
-		createCookie('connectionToken', connectionTokenInput);
+		if (scanAsInput) {
+			createCookie('scanAs', scanAsInput);
+		}
+
+		if (connectionTokenInput && /^\d{3,7}\$[a-zA-Z0-9]{48}$/.test(connectionTokenInput)) {
+			createCookie('connectionToken', connectionTokenInput);
+		}
+
+		if (autoApproveAmountInput && /^\d+$/.test(String(autoApproveAmountInput))) {
+			createCookie('autoApproveAmount', autoApproveAmountInput);
+		}
 
 		function countdown() {
 			if (secondsUntilRedirect === 0) {
@@ -75,40 +86,74 @@
 	</div>
 
 	<ul role="list" class="divide-y divide-gray-200">
-		<li class="px-6 py-4">
-			<div>
-				<label for="scan-as" class="block text-sm font-medium leading-6 text-gray-900">
-					Scan as
-				</label>
-				<div class="mt-2">
-					<input
-						bind:value={scanAsInput}
-						type="text"
-						name="scan-as"
-						id="scan-as"
-						class="block w-full rounded-md border-0 py-1.5 text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-						disabled
-					/>
-				</div>
-			</div>
-		</li>
 
-		<li class="px-6 py-4">
-			<div>
-				<label for="connection-token" class="block text-sm font-medium leading-6 text-gray-900">
-					Connection Token
-				</label>
-				<div class="mt-2">
-					<input
-						bind:value={connectionTokenInput}
-						type="text"
-						name="connection-token"
-						id="connection-token"
-						class="block w-full rounded-md border-0 py-1.5 text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-						disabled
-					/>
+		{#if scanAsInput}
+			<li class="px-6 py-4">
+				<div>
+					<label for="scan-as" class="block text-sm font-medium leading-6 text-gray-900">
+						Scan as
+					</label>
+					<div class="mt-2">
+						<input
+							bind:value={scanAsInput}
+							type="text"
+							name="scan-as"
+							id="scan-as"
+							class="block w-full rounded-md border-0 py-1.5 text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+							disabled
+						/>
+					</div>
 				</div>
-			</div>
-		</li>
+			</li>
+		{/if}
+
+		{#if connectionTokenInput && /^\d{3,7}\$[a-zA-Z0-9]{48}$/.test(connectionTokenInput)}
+			<li class="px-6 py-4">
+				<div>
+					<label for="connection-token" class="block text-sm font-medium leading-6 text-gray-900">
+						Connection Token
+					</label>
+					<div class="mt-2">
+						<input
+							bind:value={connectionTokenInput}
+							type="text"
+							name="connection-token"
+							id="connection-token"
+							class="block w-full rounded-md border-0 py-1.5 text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+							disabled
+						/>
+					</div>
+				</div>
+			</li>
+		{/if}
+
+		{#if autoApproveAmountInput && /^\d+$/.test(String(autoApproveAmountInput))}
+			<li class="px-6 py-4">
+				<div>
+					<label for="scan-as" class="block text-sm font-medium leading-6 text-gray-900">
+						Auto-approve
+					</label>
+					<div class="mt-2">
+						<input
+							bind:value={autoApproveAmountInput}
+							type="number"
+							name="auto-approve-amount"
+							id="auto-approve-amount"
+							class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+							placeholder="100"
+						/>
+
+						<p class="mt-2 text-sm text-gray-400 font-light">
+							<span class="inline-flex items-center gap-x-1.5 rounded-md px-2 py-1 text-xs font-medium text-gray-900 ring-1 ring-inset ring-gray-200">
+								<svg class="h-1.5 w-1.5 fill-green-500" viewBox="0 0 6 6" aria-hidden="true">
+									<circle cx="3" cy="3" r="3" />
+								</svg>
+								Active
+							</span>
+						</p>
+					</div>
+				</div>
+			</li>
+		{/if}
 	</ul>
 </div>

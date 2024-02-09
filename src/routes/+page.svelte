@@ -28,7 +28,6 @@
 		const { value } = event.target;
 		setTimeout(() => {
 			if (value === scanInput) {
-				console.log(`Submitt ${scanInput} silently`)
 				submit(Boolean('be silent'))
 			}
 		}, 1_000);
