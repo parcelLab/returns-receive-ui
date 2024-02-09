@@ -722,6 +722,31 @@
 										</button>
 									</div>
 								</div>
+
+								<div class="grid grid-cols-3 gap-4 rounded border border-gray-300 mt-4 p-4">
+									<div class="col-span-3">
+										<p class="text-md font-semibold text-gray-900">
+											Details for rejection reason
+											<span class="font-normal text-gray-500">
+												(optional)
+											</span>
+										</p>
+									</div>
+									<div>
+										<input
+											type="text"
+											name="rejectionDetails"
+											id="rejectionDetails"
+											class="block w-full rounded-md border-gray-300 shadow-sm sm:text-lg text-sm text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+											placeholder="..."
+											on:blur={(e) => {
+												article.rejectionDetails = e?.target?.value;
+												console.log(tracking)
+											}}
+										/>
+									</div>
+								</div>
+
 							</div>
 
 							<div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
