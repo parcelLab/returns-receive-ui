@@ -6,6 +6,28 @@ A simple UI to accept or reject a digital return
 
 [See a demo video on mobile here](https://parcellab-my.sharepoint.com/:v:/p/julian/EQLTsvUV4ntCl-7O7XXcs-UBe0Xr65CIyKogrFTZB-ZSsg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZyIsInJlZmVycmFsQXBwUGxhdGZvcm0iOiJXZWIiLCJyZWZlcnJhbE1vZGUiOiJ2aWV3In19&e=dzZFYh)
 
+## Setup
+
+To ease setup, settings can be pre-configured via URL. A click on the URL will set all settings defined in the URL, and keep others untouched. Possible URL search query parameters:
+
+* `scanAs=` can be any string
+* `connectionToken=` will be provided by your parcelLab contact and is the format of `digits$hash`
+* `autoApproveAmount=` can be any number, deactivating auto-approval by setting to `0`
+
+Can be evoked with dedicated URL: `https://returns-receive-ui.parcellab.com/auto-setup`
+
+**Examples:**
+
+Setting auto-approve amount to 250 (in shop currency), preserving all other settings:
+```
+https://returns-receive-ui.parcellab.com/auto-setup?autoApproveAmount=250
+```
+
+Initial setup with all settings:
+```
+https://returns-receive-ui.parcellab.com/auto-setup?scanAs=parcelLab&connectionToken=1612197$92zrx82hn39ex2bzxb78e289e&autoApproveAmount=250
+```
+
 ## Developing
 
 Once you've installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:

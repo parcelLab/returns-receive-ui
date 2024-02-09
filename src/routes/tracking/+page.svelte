@@ -732,7 +732,7 @@
 											</span>
 										</p>
 									</div>
-									<div>
+									<div class="col-span-3">
 										<input
 											type="text"
 											name="rejectionDetails"
