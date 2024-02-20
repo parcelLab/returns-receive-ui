@@ -5,9 +5,10 @@
 	import { afterUpdate } from 'svelte';
 
 	export let autoApproveAmount = parseInt(getCookie('autoApproveAmount') || '0');
+	export let wasAutoApproved = false;
 
-	/**
-	 * @type {{ orderNo: any; consignmentNo: any; courier: { prettyname: any; }; tracking_number: any; customFields: { shopifyReturnData: { totalRefundAmountCurrency: any; totalRefundAmount: number; refundedTaxCurrency: any; refundedTax: number; }; }; recipient: any; street: any; city: any; zip_code: any; region: string; country: { name: any; }; email: any; created: string | number | Date; articles: any; } | null}
+	 /**
+	 * @type {{ articles: { forEach: (arg0: { (article: { acceptedQuantity: number; }): void; (article: any): void; }) => void; filter: (arg0: { (article: any): any; (article: any): any; }) => { (): any; new (): any; length: any; }; length: any; some: (arg0: { (article: any): boolean; (article: any): boolean; (article: any): any; }) => any; }; customFields: { receivedAt: any; shopifyReturnData: { refundCustomer: { total: any; }; totalRefundAmountCurrency: any; totalRefundAmount: number; refundedTaxCurrency: any; refundedTax: number; }; }; orderNo: any; consignmentNo: any; courier: { prettyname: any; }; tracking_number: any; recipient: any; street: any; city: any; zip_code: any; region: string; country: { name: any; }; email: any; created: string | number | Date; } | null}
 	 */
 	export let tracking = null;
 
@@ -24,12 +25,21 @@
 	}
 
 	afterUpdate(async () => {
-		if (tracking && autoApproveAmount > 0) {
-			tracking.articles.forEach((/** @type {{ accepted: boolean; acceptedQuantity: any; quantity: any; }} */ article) => {
-				article.accepted = true;
-				article.acceptedQuantity = article.quantity;
-			})
-			await submitTrackingCheck(tracking);
+		if (!tracking?.customFields?.receivedAt) {
+			if (tracking && autoApproveAmount > 0) {
+			const refundAmount = tracking?.customFields?.shopifyReturnData?.refundCustomer?.total
+			if (refundAmount) {
+				if (refundAmount < autoApproveAmount) {
+					tracking.articles.forEach((article) => {
+						article.accepted = true;
+						article.acceptedQuantity = article.quantity;
+					})
+					await submitTrackingCheck(tracking);
+
+					wasAutoApproved = true;
+				}
+			}
+		}
 		}
 	})
 </script>
@@ -396,7 +406,7 @@
 												Article no.: {article.articleNo}
 												&bull;
 												{tracking?.customFields?.shopifyReturnData?.totalRefundAmountCurrency}
-												{article.price}
+												{parseFloat(article.price).toFixed(2)}
 												&bull;
 												<a href={article.articleUrl} target="_blank" class="underline">
 													View product page
@@ -508,7 +518,12 @@
 			<div>
 				<p class="text-sm text-gray-700">
 					{tracking?.articles?.filter((article) => article?.accepted || article?.rejected).length} of
-					{tracking?.articles?.length} lines checked
+					{tracking?.articles?.length} lines
+					{#if wasAutoApproved}
+						auto-approved
+					{:else}
+						checked
+					{/if}
 				</p>
 			</div>
 			<div>
