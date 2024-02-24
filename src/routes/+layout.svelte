@@ -59,7 +59,7 @@
 						</a>
 						<a
 							href="{base}/setup"
-							class="{path === '/setup'
+							class="{path.split('/').some(p => p ==='setup')
 								? activeClassesDesktop
 								: inactiveClassesDesktop} inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium"
 						>
@@ -84,7 +84,7 @@
 					<a
             href="{base}/setup"
 						type="button"
-						class="relative inline-flex items-center justify-center rounded-md bg-white p-2  hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 {path === '/setup' ? 'text-blue-500' : 'text-gray-400'}"
+						class="relative inline-flex items-center justify-center rounded-md bg-white p-2  hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 {path.split('/').some(p => p ==='setup') ? 'text-blue-500' : 'text-gray-400'}"
 						aria-controls="mobile-menu"
 						aria-expanded="false"
 					>

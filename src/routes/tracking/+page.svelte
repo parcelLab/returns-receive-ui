@@ -7,10 +7,10 @@
 	export let autoApproveAmount = parseInt(getCookie('autoApproveAmount') || '0');
 	export let wasAutoApproved = false;
 
-	 /**
-	 * @type {{ articles: { forEach: (arg0: { (article: { acceptedQuantity: number; }): void; (article: any): void; }) => void; filter: (arg0: { (article: any): any; (article: any): any; }) => { (): any; new (): any; length: any; }; length: any; some: (arg0: { (article: any): boolean; (article: any): boolean; (article: any): any; }) => any; }; customFields: { receivedAt: any; shopifyReturnData: { refundCustomer: { total: any; }; totalRefundAmountCurrency: any; totalRefundAmount: number; refundedTaxCurrency: any; refundedTax: number; }; }; orderNo: any; consignmentNo: any; courier: { prettyname: any; }; tracking_number: any; recipient: any; street: any; city: any; zip_code: any; region: string; country: { name: any; }; email: any; created: string | number | Date; } | null}
+	/**
+	 * @type {{ articles: { forEach: (arg0: { (article: { acceptedQuantity: number; }): void; (article: any): void; }) => void; filter: (arg0: { (article: any): any; (article: any): any; }) => { (): any; new (): any; length: any; }; length: any; some: (arg0: { (article: any): boolean; (article: any): boolean; (article: any): any; }) => any; }; customFields: { returnReceive: { receivedAt: any; }; shopifyReturnData: { refundCustomer: { total: any; }; totalRefundAmountCurrency: any; totalRefundAmount: number; refundedTaxCurrency: any; refundedTax: number; }; }; orderNo: any; consignmentNo: any; courier: { prettyname: any; }; tracking_number: any; recipient: any; street: any; city: any; zip_code: any; region: string; country: { name: any; }; email: any; created: string | number | Date; } | null}
 	 */
-	export let tracking = null;
+	 export let tracking = null;
 
 	export async function getTrackingDetailsAndSetData() {
 		tracking = await getTrackingDetails();
@@ -25,7 +25,7 @@
 	}
 
 	afterUpdate(async () => {
-		if (!tracking?.customFields?.receivedAt) {
+		if (!tracking?.customFields?.returnReceive?.receivedAt) {
 			if (tracking && autoApproveAmount > 0) {
 			const refundAmount = tracking?.customFields?.shopifyReturnData?.refundCustomer?.total
 			if (refundAmount) {
@@ -45,7 +45,7 @@
 </script>
 
 {#await getTrackingDetailsAndSetData()}
-	<main class="pt-8 pb-5">
+	<main class="pt-8 pb-20">
 		<header class="relative">
 			<div class="mx-auto max-w-7xl px-4 pb-4 sm:px-6 lg:px-8">
 				<div
@@ -222,7 +222,7 @@
 		</div>
 	</main>
 {:then}
-	<main class="pt-8 pb-5">
+	<main class="pt-8 pb-20">
 		<header class="relative">
 			<div class="mx-auto max-w-7xl px-4 pb-4 sm:px-6 lg:px-8">
 				<div
@@ -383,7 +383,7 @@
 					<h2 class="text-sm font-semibold leading-6 text-gray-900">Returned Items</h2>
 
 					<ul role="list" class="divide-y divide-gray-100">
-						{#each tracking?.articles as article}
+						{#each tracking?.articles || [] as article}
 							<li class="grid grid-cols-4 gap-4 pt-8 pb-8">
 								<div>
 									<img
@@ -530,14 +530,31 @@
 				<button
 					class="rounded-md px-4 py-2 sm:text-lg text-sm font-semibold text-white shadow-sm {tracking?.articles?.some(
 						(article) => !article?.accepted && !article?.rejected
-					)
+					) || tracking?.customFields?.returnReceive?.receivedAt
 						? 'bg-blue-100'
 						: 'bg-blue-500'}"
-					disabled={tracking?.articles?.some((article) => !article?.accepted && !article?.rejected)}
+					disabled={
+						tracking?.articles?.some((article) => !article?.accepted && !article?.rejected) ||
+						tracking?.customFields?.returnReceive?.receivedAt
+					}
 					on:click={submitTracking}
 				>
-					Close return
+					{#if tracking?.customFields?.returnReceive?.receivedAt}
+						Return already closed
+					{:else}
+						Close return
+					{/if}
 				</button>
+
+				{#if tracking?.customFields?.returnReceive?.receivedAt}
+					<button
+						class="rounded-md px-4 py-2 sm:text-lg text-sm font-semibold text-white shadow-sm bg-blue-500"
+						on:click={() => { window.location.href = '/'; }}
+					>
+						Back to scanning
+					</button>
+				{/if}
+
 			</div>
 		</div>
 	</footer>
