@@ -32,21 +32,19 @@ jobs:
             # shellcheck disable=SC2086
             echo "version=${SHA:0:7}" >> $GITHUB_OUTPUT
           fi
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        id: pnpm-install
+      - name: Install Node.js
+        uses: actions/setup-node@v3
         with:
-          version: 8
-          run_install: false
-
+          node-version: 18
+          cache: npm
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
+      - name: build
         env:
-          NPM_GITHUB_TOKEN: ${{ secrets.PACKAGES_READ_TOKEN }}
-      - name: Build bundle with react variables
-        run: pnpm build
-        env:
-          REACT_APP_VERSION: ${{ steps.version.outputs.version }}
+          BASE_PATH: '/returns-receive-ui'
+        run: |
+          npm run build
+          touch build/.nojekyll
       - uses: actions/upload-artifact@v3
         with:
           name: returns-receive-ui
