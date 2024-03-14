@@ -1,0 +1,68 @@
+name: Kubernetes Deploy
+on:
+  deployment:
+jobs:
+  read_plconfig:
+    runs-on: ubuntu-latest
+    outputs:
+      plconfig: ${{ steps.json.outputs.result }}
+    steps:
+      - name: Checkout current git repository
+        uses: actions/checkout@v3
+      - name: Load YAML values from file into JSON
+        id: json
+        uses: mikefarah/yq@v4.30.8
+        with:
+          cmd: yq "." plconfig.yaml -o=json -I=0
+  build_bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current git repository
+        uses: actions/checkout@v3
+      - name: Load version
+        id: version
+        run: |
+          REF="${{ github.event.deployment.ref }}"
+          SHA="${{ github.event.deployment.sha }}"
+          if [[ "${{ github.event.deployment.payload.env }}" == 'prod' ]]
+          then
+            # shellcheck disable=SC2086
+            echo "version=${REF##*/}" >> $GITHUB_OUTPUT
+          else
+            # shellcheck disable=SC2086
+            echo "version=${SHA:0:7}" >> $GITHUB_OUTPUT
+          fi
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+      - name: Install dependencies
+        run: npm install
+      - name: build
+        env:
+          BASE_PATH: '/returns-receive-ui'
+        run: |
+          npm run build
+          touch build/.nojekyll
+      - uses: actions/upload-artifact@v3
+        with:
+          name: returns-receive-ui
+          path: build/
+  deploy:
+    needs: [read_plconfig, build_bundle]
+    uses: parcelLab/ci/.github/workflows/kubernetes.yaml@v1
+    with:
+      artifactPath: build/
+      artifactName: returns-receive-ui
+      sentryOrg: ${{ fromJSON(needs.read_plconfig.outputs.plconfig).observability.sentry.org }}
+      sentryProject: ${{ fromJSON(needs.read_plconfig.outputs.plconfig).observability.sentry.project }}
+      sentryUrl: ${{ fromJSON(needs.read_plconfig.outputs.plconfig).observability.sentry.url }}
+      slackChannelProd: ${{ fromJSON(needs.read_plconfig.outputs.plconfig).deployment.kubernetes.env.prod.metadata.slackChannelId }}
+      slackChannelStaging: ${{ fromJSON(needs.read_plconfig.outputs.plconfig).deployment.kubernetes.env.staging.metadata.slackChannelId }}
+      slackChannelTest: ${{ fromJSON(needs.read_plconfig.outputs.plconfig).deployment.kubernetes.env.test.metadata.slackChannelId }}
+    secrets:
+      npmGithubReadToken: ${{ secrets.PACKAGES_READ_TOKEN }}
+      repoAccessToken: ${{ secrets.REPO_ACCESS_TOKEN }}
+      sentryAuthToken: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      slackBotToken: ${{ secrets.SLACK_BOT_TOKEN }}
