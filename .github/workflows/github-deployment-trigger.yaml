@@ -1,0 +1,21 @@
+name: Deploy to Kubernetes via GitHub deployment
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  deploy_to_prod:
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - verify
+    uses: parcelLab/ci/.github/workflows/deployment.yaml@v1
+    with:
+      author: ${{ github.event.pusher.name }}
+      description: ${{ toJSON(github.event.head_commit.message) }}
+      env: staging
+      ref: ${{ github.ref }}
+    secrets:
+      repoAccessToken: ${{ secrets.REPO_ACCESS_TOKEN }}
+
+
